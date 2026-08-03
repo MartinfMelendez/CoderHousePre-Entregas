@@ -36,13 +36,14 @@ while (intentos < 3) {
     if (continuar) {
       numeroSecreto = Math.floor(Math.random() * 10) + 1; //Genera otro numero para el proximo juego
       intentos = 0;
+    } else {
+      break;
     }
   } else if (numeroUsuario < numeroSecreto) {
     alert("El numero ingresado es menor al numero secreto");
   } else {
     alert("El numero ingresado es mayor al numero secreto");
   }
-
   if (intentos === 3) {
     alert(`Game Over! El numero era ${numeroSecreto}`);
     continuar = confirm("Quieres jugar otra vez?");
