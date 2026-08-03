@@ -28,8 +28,6 @@ while (intentos < 3) {
   console.log(`Intento numero: ${intentos}`);
   if (numeroUsuario < 0 || numeroUsuario > 10 || isNaN(numeroUsuario)) {
     alert("El numero ingresado no es valido");
-    intentos--;
-    console.log(`Intento numero: ${intentos}`);
   }
 
   if (numeroUsuario === numeroSecreto) {
