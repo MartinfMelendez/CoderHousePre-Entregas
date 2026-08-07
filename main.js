@@ -30,6 +30,18 @@ function validarNumeroIngresado(num1) {
   return true;
 }
 
+const validarIntentos = (intentos) => {
+  if (intentos === 3) {
+    alert(`Game Over! El numero era ${numeroSecreto}`);
+    continuar = confirm("Quieres jugar otra vez?");
+    if (continuar) {
+      numeroSecreto = Math.floor(Math.random() * 10) + 1; //Genera otro numero para el proximo juego
+      console.log(numeroSecreto);
+      return (intentos = 0);
+    }
+  }
+};
+
 while (intentos < 3) {
   const numeroUsuario = parseInt(prompt("Adivina el numero entre 1 y 10"));
   intentos++;
@@ -51,13 +63,6 @@ while (intentos < 3) {
       alert("El numero ingresado es mayor al numero secreto");
     }
   }
-  if (intentos === 3) {
-    alert(`Game Over! El numero era ${numeroSecreto}`);
-    continuar = confirm("Quieres jugar otra vez?");
-    if (continuar) {
-      numeroSecreto = Math.floor(Math.random() * 10) + 1; //Genera otro numero para el proximo juego
-      console.log(numeroSecreto);
-      intentos = 0;
-    }
-  }
+
+  validarIntentos(intentos);
 }
