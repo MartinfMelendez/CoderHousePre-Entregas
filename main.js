@@ -45,7 +45,7 @@ function volverAJugar() {
 
 const juegoTerminado = (intentos) => {
   if (intentos === maxIntentos) {
-    alert(`Game Over! El numero era ${numeroSecreto}`);
+  
     return true;
   } else {
     return false;
@@ -78,7 +78,8 @@ while (intentos < maxIntentos) {
   }
 
   if (juegoTerminado(intentos)) {
-    if (volverAJugar()) {
+      alert(`Game Over! El numero era ${numeroSecreto}`);
+    if (volverAJugar()) {      
       reiniciarJuego();
       continue;
     } else {
