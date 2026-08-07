@@ -12,7 +12,6 @@ Debes implementar al menos un bucle (for, while o do...while).
 
 //Creacion del juego adivina el numero
 
-let continuar;
 let intentos = 0;
 
 let numeroSecreto = Math.floor(Math.random() * 10) + 1; //Creacion numero aleatorio entre 1 y 10
@@ -33,14 +32,23 @@ function validarNumeroIngresado(num1) {
 const validarIntentos = (intentos) => {
   if (intentos === 3) {
     alert(`Game Over! El numero era ${numeroSecreto}`);
-    continuar = confirm("Quieres jugar otra vez?");
-    if (continuar) {
-      numeroSecreto = Math.floor(Math.random() * 10) + 1; //Genera otro numero para el proximo juego
-      console.log(numeroSecreto);
-      return (intentos = 0);
-    }
   }
 };
+
+const renovarJuego = () => {
+  intentos = 0;
+  numeroSecreto = Math.floor(Math.random() * 10) + 1;
+  console.log(numeroSecreto);
+};
+
+function volverAJugar() {
+  const continuar = confirm("Quieres jugar otra vez?");
+  if (continuar) {
+    renovarJuego();
+    return true;
+  }
+  return false;
+}
 
 while (intentos < 3) {
   const numeroUsuario = parseInt(prompt("Adivina el numero entre 1 y 10"));
@@ -50,11 +58,7 @@ while (intentos < 3) {
   if (validarNumeroIngresado(numeroUsuario)) {
     if (numeroUsuario === numeroSecreto) {
       alert("Felicidades! Adivinaste el numero");
-      continuar = confirm("Quieres jugar otra vez?");
-      if (continuar) {
-        numeroSecreto = Math.floor(Math.random() * 10) + 1; //Genera otro numero para el proximo juego
-        intentos = 0;
-      } else {
+      if (!volverAJugar()) {
         break;
       }
     } else if (numeroUsuario < numeroSecreto) {
@@ -63,6 +67,5 @@ while (intentos < 3) {
       alert("El numero ingresado es mayor al numero secreto");
     }
   }
-
   validarIntentos(intentos);
 }
