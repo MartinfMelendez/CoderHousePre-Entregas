@@ -22,27 +22,34 @@ alert(
   "Bienvenido al juego de adivina el numero, tienes 3 intentos para adivinar el numero secreto entre 1 y 10",
 );
 
+function validarNumeroIngresado(num1) {
+  if (num1 < 0 || num1 > 10 || isNaN(num1)) {
+    alert("El numero ingresado no es valido");
+    return false;
+  }
+  return true;
+}
+
 while (intentos < 3) {
   const numeroUsuario = parseInt(prompt("Adivina el numero entre 1 y 10"));
   intentos++;
   console.log(`Intento numero: ${intentos}`);
-  if (numeroUsuario < 0 || numeroUsuario > 10 || isNaN(numeroUsuario)) {
-    alert("El numero ingresado no es valido");
-  }
 
-  if (numeroUsuario === numeroSecreto) {
-    alert("Felicidades! Adivinaste el numero");
-    continuar = confirm("Quieres jugar otra vez?");
-    if (continuar) {
-      numeroSecreto = Math.floor(Math.random() * 10) + 1; //Genera otro numero para el proximo juego
-      intentos = 0;
+  if (validarNumeroIngresado(numeroUsuario)) {
+    if (numeroUsuario === numeroSecreto) {
+      alert("Felicidades! Adivinaste el numero");
+      continuar = confirm("Quieres jugar otra vez?");
+      if (continuar) {
+        numeroSecreto = Math.floor(Math.random() * 10) + 1; //Genera otro numero para el proximo juego
+        intentos = 0;
+      } else {
+        break;
+      }
+    } else if (numeroUsuario < numeroSecreto) {
+      alert("El numero ingresado es menor al numero secreto");
     } else {
-      break;
+      alert("El numero ingresado es mayor al numero secreto");
     }
-  } else if (numeroUsuario < numeroSecreto) {
-    alert("El numero ingresado es menor al numero secreto");
-  } else {
-    alert("El numero ingresado es mayor al numero secreto");
   }
   if (intentos === 3) {
     alert(`Game Over! El numero era ${numeroSecreto}`);
