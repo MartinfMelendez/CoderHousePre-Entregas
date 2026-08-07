@@ -44,12 +44,7 @@ function volverAJugar() {
 }
 
 const juegoTerminado = (intentos) => {
-  if (intentos === maxIntentos) {
-  
-    return true;
-  } else {
-    return false;
-  }
+return intentos === maxIntentos
 };
 
 while (intentos < maxIntentos) {
