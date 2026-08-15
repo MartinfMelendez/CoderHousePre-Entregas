@@ -35,8 +35,6 @@ Pasos sugeridos:
 
 const productos = []; //Creacion del array productos
 
-const productoUsuario = prompt("Ingrese el nombre del producto a ingresar:"); //Solicitar producto al usuario
-
 function agregarProducto(producto) {
   productos.push(producto); //Agrega producto al final del array
 }
@@ -47,9 +45,20 @@ function eliminarUltimoProducto() {
 }
 
 function hayProducto(producto) {
+  //Funcion para valir si hay productos en el array
   if (productos.length === 0) {
     alert("No hay productos en la lista");
     return false;
   }
   return true;
 }
+
+alert(
+  `Bienvenido al simulador de productos, actualmente hay ${productos.length} productos en la lista.`,
+);
+
+do {
+  const productoUsuario = prompt("Ingrese el nombre del producto a ingresar:"); //Solicitar producto al usuario
+  agregarProducto(productoUsuario); //Agrega el producto al array
+  alert(`Producto agregado: ${productoUsuario}`); //Muestra el producto agregado
+} while (confirm("Desea agregar un producto?"));
