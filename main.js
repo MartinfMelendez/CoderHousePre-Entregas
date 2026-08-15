@@ -66,25 +66,42 @@ const opciones = prompt(
 );
 console.log(opciones);
 
-do {
-  const productoUsuario = prompt("Nombre del producto a ingresar:"); //Solicitar producto al usuario
-  if (productoUsuario === null || productoUsuario === "") {
-    alert("No se permite que este vacio el nombre del producto");
-    continue;
-  }
+switch (opciones) {
+  case "1":
+    menuAgregarProdcuto();
+    break;
 
-  if (esNumero(productoUsuario)) {
-    alert("El producto ingresado no es valido, ingrese un producto valido");
-    continue;
-  }
-  if (
-    productoRepetido(productoUsuario)
-  ) //Se normaliza los datos para evitar problemas de key sensitive
-  {
-    alert("El producto ya existe en la lista, ingrese otro producto");
-    continue;
-  }
+  default:
+    break;
+}
 
-  agregarProducto(productoUsuario); //Agrega el producto al array
-  alert(`Producto agregado: ${productoUsuario}`); //Muestra el producto agregado
-} while (confirm("Desea agregar un producto?"));
+function menuAgregarProdcuto() {
+  do {
+    const productoUsuario = prompt("Nombre del producto a ingresar:"); //Solicitar producto al usuario
+
+    if (productoUsuario === null) {
+      //Si el usuario cancela se cierra el programa
+      break;
+    }
+
+    if (productoUsuario === "") {
+      alert("No se permite que este vacio el nombre del producto");
+      continue;
+    }
+
+    if (esNumero(productoUsuario)) {
+      alert("El producto ingresado no es valido, ingrese un producto valido");
+      continue;
+    }
+    if (
+      productoRepetido(productoUsuario)
+    ) //Se normaliza los datos para evitar problemas de key sensitive
+    {
+      alert("El producto ya existe en la lista, ingrese otro producto");
+      continue;
+    }
+
+    agregarProducto(productoUsuario); //Agrega el producto al array
+    alert(`Producto agregado: ${productoUsuario}`); //Muestra el producto agregado
+  } while (confirm("Desea agregar un producto?"));
+}
