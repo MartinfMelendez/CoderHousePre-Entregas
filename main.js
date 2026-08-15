@@ -1,84 +1,55 @@
 /*
 
 Entregable
-El Escenario
+Consigna: Checkpoint de Arrays
 
-Debes continuar el desarrollo de tu simulador, implementando el uso de funciones para mejorar y modularizar procesos en tu script para simplificar la lógica y la reutilización de fragmentos de código sin la necesidad de repetirlos.
-Criterios de Aceptación
+En esta entrega, integrarás lo aprendido sobre arrays en la estructura de proyecto que venimos desarrollando.
+Criterios de Aceptación:
 
-El repositorio debe:
+    El código debe ser funcional y no arrojar errores en la consola.
+    Se deben utilizar al menos 3 métodos de arrays vistos en el módulo.
+    El uso de for...of debe estar correctamente implementado para recorrer la lista.
+    Se debe continuar trabajando con las herramientas vistas hasta el momento (funciones, condicionales, ciclos) en un entorno de simulador, no pueden ser herramientas sueltas.
 
-    Crea al menos 3 funciones siguiendo el algoritmo básico de todo programa (entradas de datos, procesamiento de datos y mostrar los resultado de salida de los mismos.)
-    Uso de parámetros: Ingresar información para procesarla dentro de la funcion mediante el uso de parámetros y argumentos en todas las funciones.
-    Uso de return: Al menos una funcion debe retornar un valor para utilizarse en el algoritmo.
-    Función flecha: Al menos una funcion debe ser del tipo flecha, optimizando un proceso simple.
-    Realizar llamadas(invocar) a las funciones que utilizaste en tu simulador
-    Agrega los ciclos de iteración y condicionales necesarios, para que tu proyecto funcione correctamente.
-    La interacción del simulador se hará íntegramente sobre la Consola y Alert, con los datos previamente solicitados mediante prompt.
+Pasos sugeridos:
 
-Método de entrega
+    Preparación de la Colección:
+        Crea un array con un nombre semántico asociado a tu proyecto.
+        Inicialízalo con al menos 5 elementos (strings o números).
+    Manipulación Dinámica:
+        Agrega un nuevo elemento al final del array usando push.
+        Agrega uno al principio usando unshift.
+        Elimina el último elemento y guárdalo en una variable para mostrarlo en un mensaje: "Se ha eliminado el elemento: [nombre]".
+    Búsqueda y Validación:
+        Solicita al usuario (mediante prompt o una variable fija) el nombre de un elemento para buscar.
+        Usa includes para verificar si existe.
+        Si existe, usa indexOf para informar en qué posición (índice) se encuentra.
+    Actualización por Índice:
+        Busca un índice específico y cambia su valor por uno nuevo implementando el método splice.
+    Reporte Iterativo:
+        Crea una función para recorrer el array.
+        Dentro de la función, utiliza un bucle for...of para recorrer el array y mostrar cada elemento con un formato claro (ej: "Producto: Manzana").
 
-Sube tus archivos a un repositorio de GitHub y comparte la URL. Asegúrate de que el repositorio sea público para que pueda ser revisado.
 
 */
 
-//Creacion del juego adivina el numero utilizando funciones
+const productos = []; //Creacion del array productos
 
-let intentos = 0;
-const maxIntentos = 3;
-let numeroSecreto = Math.floor(Math.random() * 10) + 1; //Creacion numero aleatorio entre 1 y 10
-console.log(numeroSecreto);
+const productoUsuario = prompt("Ingrese el nombre del producto a ingresar:"); //Solicitar producto al usuario
 
-function numeroInvalido(num1) {
-  const resultado = num1 < 1 || num1 > 10 || isNaN(num1);
-  return resultado;
-}
-const reiniciarJuego = () => {
-  intentos = 0;
-  numeroSecreto = Math.floor(Math.random() * 10) + 1;
-  console.log(numeroSecreto);
-};
-
-function volverAJugar() {
-  return confirm("¿Quiere volver a jugar?");
+function agregarProducto(producto) {
+  productos.push(producto); //Agrega producto al final del array
 }
 
-const juegoTerminado = (intentos) => {
-return intentos === maxIntentos
-};
+function eliminarUltimoProducto() {
+  const productoEliminado = productos.pop();
+  alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
+}
 
-while (intentos < maxIntentos) {
-  const numeroUsuario = parseInt(prompt("Adivina el numero entre 1 y 10"));
-
-  if (!numeroInvalido(numeroUsuario)) {
-    intentos++;
-    console.log(`Intento numero: ${intentos}`);
-  } else {
-    alert("El numero ingresado no es valido");
-    continue;
+function hayProducto(producto) {
+  if (productos.length === 0) {
+    alert("No hay productos en la lista");
+    return false;
   }
-
-  if (numeroUsuario === numeroSecreto) {
-    alert("Felicidades! Adivinaste el numero");
-    if (volverAJugar()) {
-      reiniciarJuego();
-      continue;
-    } else {
-      break;
-    }
-  } else if (numeroUsuario < numeroSecreto) {
-    alert("El numero ingresado es menor al numero secreto");
-  } else {
-    alert("El numero ingresado es mayor al numero secreto");
-  }
-
-  if (juegoTerminado(intentos)) {
-      alert(`Game Over! El numero era ${numeroSecreto}`);
-    if (volverAJugar()) {      
-      reiniciarJuego();
-      continue;
-    } else {
-      break;
-    }
-  }
+  return true;
 }
