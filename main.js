@@ -48,10 +48,10 @@ function agregarProducto(producto) {
   baseProductos.push(producto); //Agrega producto al final del array
 }
 
-function eliminarUltimoProducto() {
-  const productoEliminado = baseProductos.pop();
-  return alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
-}
+// function eliminarUltimoProducto() {
+//   const productoEliminado = baseProductos.pop();
+//   return alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
+// }
 
 function eliminarProductoEspecifico(producto) {
   const indice = indiceProductoBuscado(producto);
@@ -87,7 +87,7 @@ function menuAgregarProdcuto() {
       continue;
     }
 
-    const productoNormalizado = productoUsuario.toLocaleUpperCase();
+    const productoNormalizado = productoUsuario.toUpperCase();
 
     if (esNumero(productoNormalizado)) {
       alert("El producto ingresado no es valido, ingrese un producto valido");
@@ -112,18 +112,27 @@ function menuEliminarUnProducto() {
     return;
   }
 
-  const normalizoProductoAEliminar = productoAEliminar.toLocaleUpperCase();
+  const normalizoProductoAEliminar = productoAEliminar.toUpperCase();
 
   if (normalizoProductoAEliminar === "") {
-    eliminarUltimoProducto();
+    alert("Debe ingresar el producto a eliminar");
   } else {
     eliminarProductoEspecifico(normalizoProductoAEliminar);
   }
 }
 
 function menuBuscarUnProducto(producto) {
-  const indice = baseProductos.indexOf(producto);
+  const indice = indiceProductoBuscado(producto);
   alert(`${indice + 1} - ${baseProductos[indice]}`);
+}
+
+function menuListarProductos() {
+  let listado = "";
+  for (let producto of baseProductos) {
+    const indice = indiceProductoBuscado(producto);
+    listado += `${indice + 1} - ${producto} \n`;
+  }
+  alert(listado);
 }
 
 alert(`Bienvenido al simulador de productos.`);
@@ -154,7 +163,7 @@ do {
       if (!hayProductos()) {
         break;
       }
-      const producto = prompt("Producto a buscar").toLocaleUpperCase();
+      const producto = prompt("Producto a buscar").toUpperCase();
 
       if (productoNoExiste(producto)) {
         alert("El producto ingresado no existe");
@@ -163,6 +172,10 @@ do {
       menuBuscarUnProducto(producto);
       break;
     case "4":
+      if (!hayProductos()) {
+        break;
+      }
+      menuListarProductos();
       break;
     case "5":
       alert("Hasta luego");
