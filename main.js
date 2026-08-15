@@ -35,7 +35,7 @@ Pasos sugeridos:
 
 const baseProductos = []; //Creacion del array productos
 
-const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa sea un numero
+const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa sea no sea solo numeros
 
 const productoRepetido = (producto) => baseProductos.includes(producto); //Verifico si ya existe el producto
 
@@ -58,14 +58,13 @@ function eliminarProductoEspecifico(producto) {
   if (indice === -1) {
     return alert("El producto ingresado no existe");
   }
-  const productoEliminado = baseProductos.splice(indice, 1);
+  const productoEliminado = baseProductos.splice(indice, 1)[0];
   return alert(`Se elimino el producto: ${productoEliminado}`);
 }
 
 function hayProductos() {
   //Funcion para valir si hay productos en el array
   if (baseProductos.length === 0) {
-    alert("No hay productos en la lista");
     return false;
   }
   return true;
@@ -122,6 +121,10 @@ function menuEliminarUnProducto() {
 }
 
 function menuBuscarUnProducto(producto) {
+  if (productoNoExiste(producto)) {
+    alert("El producto ingresado no existe");
+    return;
+  }
   const indice = indiceProductoBuscado(producto);
   alert(`${indice + 1} - ${baseProductos[indice]}`);
 }
@@ -155,24 +158,22 @@ do {
       break;
     case "2":
       if (!hayProductos()) {
+        alert("No hay productos en la lista");
         break;
       }
       menuEliminarUnProducto();
       break;
     case "3":
       if (!hayProductos()) {
+        alert("No hay productos en la lista");
         break;
       }
       const producto = prompt("Producto a buscar").toUpperCase();
-
-      if (productoNoExiste(producto)) {
-        alert("El producto ingresado no existe");
-        break;
-      }
       menuBuscarUnProducto(producto);
       break;
     case "4":
       if (!hayProductos()) {
+        alert("No hay productos en la lista");
         break;
       }
       menuListarProductos();
