@@ -29,20 +29,10 @@ const maxIntentos = 3;
 let numeroSecreto = Math.floor(Math.random() * 10) + 1; //Creacion numero aleatorio entre 1 y 10
 console.log(numeroSecreto);
 
-function validarNumeroIngresado(num1) {
-  if (num1 < 0 || num1 > 10 || isNaN(num1)) {
-    return false;
-  }
-  return true;
+function numeroInvalido(num1) {
+  const resultado = num1 < 1 || num1 > 10 || isNaN(num1);
+  return resultado;
 }
-
-const juegoTerminado = (intentos, numeroSecreto) => {
-  if (intentos === maxIntentos) {
-    alert(`Game Over! El numero era ${numeroSecreto}`);
-    reiniciarJuego();
-  }
-};
-
 const reiniciarJuego = () => {
   intentos = 0;
   numeroSecreto = Math.floor(Math.random() * 10) + 1;
@@ -50,17 +40,17 @@ const reiniciarJuego = () => {
 };
 
 function volverAJugar() {
-  const continuar = confirm("Quieres jugar otra vez?");
-  if (continuar) {
-    return true;
-  }
-  return false;
+  return confirm("¿Quiere volver a jugar?");
 }
+
+const juegoTerminado = (intentos) => {
+  return intentos === maxIntentos;
+};
 
 while (intentos < maxIntentos) {
   const numeroUsuario = parseInt(prompt("Adivina el numero entre 1 y 10"));
 
-  if (validarNumeroIngresado(numeroUsuario)) {
+  if (!numeroInvalido(numeroUsuario)) {
     intentos++;
     console.log(`Intento numero: ${intentos}`);
   } else {
@@ -70,10 +60,11 @@ while (intentos < maxIntentos) {
 
   if (numeroUsuario === numeroSecreto) {
     alert("Felicidades! Adivinaste el numero");
-    if (!volverAJugar()) {
-      break;
-    } else {
+    if (volverAJugar()) {
       reiniciarJuego();
+      continue;
+    } else {
+      break;
     }
   } else if (numeroUsuario < numeroSecreto) {
     alert("El numero ingresado es menor al numero secreto");
@@ -81,5 +72,13 @@ while (intentos < maxIntentos) {
     alert("El numero ingresado es mayor al numero secreto");
   }
 
-  juegoTerminado(intentos, numeroSecreto);
+  if (juegoTerminado(intentos)) {
+    alert(`Game Over! El numero era ${numeroSecreto}`);
+    if (volverAJugar()) {
+      reiniciarJuego();
+      continue;
+    } else {
+      break;
+    }
+  }
 }
