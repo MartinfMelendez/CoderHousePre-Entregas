@@ -53,12 +53,38 @@ function hayProducto(producto) {
   return true;
 }
 
+const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa sea un numero
+
+const productoRepetido = (producto) => productos.includes(producto);
+
 alert(
   `Bienvenido al simulador de productos, actualmente hay ${productos.length} productos en la lista.`,
 );
 
+const opciones = prompt(
+  "1-Agregar producto\n2-Eliminar un producto\n3-Buscar producto\n4-Listar productos",
+);
+console.log(opciones);
+
 do {
-  const productoUsuario = prompt("Ingrese el nombre del producto a ingresar:"); //Solicitar producto al usuario
+  const productoUsuario = prompt("Nombre del producto a ingresar:"); //Solicitar producto al usuario
+  if (productoUsuario === null || productoUsuario === "") {
+    alert("No se permite que este vacio el nombre del producto");
+    continue;
+  }
+
+  if (esNumero(productoUsuario)) {
+    alert("El producto ingresado no es valido, ingrese un producto valido");
+    continue;
+  }
+  if (
+    productoRepetido(productoUsuario)
+  ) //Se normaliza los datos para evitar problemas de key sensitive
+  {
+    alert("El producto ya existe en la lista, ingrese otro producto");
+    continue;
+  }
+
   agregarProducto(productoUsuario); //Agrega el producto al array
   alert(`Producto agregado: ${productoUsuario}`); //Muestra el producto agregado
 } while (confirm("Desea agregar un producto?"));
