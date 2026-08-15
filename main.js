@@ -33,38 +33,45 @@ Pasos sugeridos:
 
 */
 
-const productos = []; //Creacion del array productos
+const baseProductos = []; //Creacion del array productos
 
 const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa sea un numero
 
-const productoRepetido = (producto) => productos.includes(producto); //Verifico si ya existe el producto
+const productoRepetido = (producto) => baseProductos.includes(producto); //Verifico si ya existe el producto
 
-const indiceProductoBuscado = (producto) => productos.indexOf(producto);
+const indiceProductoBuscado = (producto) => baseProductos.indexOf(producto);
+
+const promptNull = (valor) => valor === null;
 
 //Acciones sobre el array
 function agregarProducto(producto) {
-  productos.push(producto); //Agrega producto al final del array
+  baseProductos.push(producto); //Agrega producto al final del array
 }
 
 function eliminarUltimoProducto() {
-  const productoEliminado = productos.pop();
-  alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
+  const productoEliminado = baseProductos.pop();
+  return alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
 }
 
 function eliminarProductoEspecifico(producto) {
   const indice = indiceProductoBuscado(producto);
-  const productoAEliminar = productos.splice(indice, 1);
-  return productoAEliminar;
+  if (indice === -1) {
+    return alert("El producto ingresado no existe");
+  }
+  const productoEliminado = baseProductos.splice(indice, 1);
+  return alert(`Se elimino el producto: ${productoEliminado}`);
 }
 
 function hayProductos() {
   //Funcion para valir si hay productos en el array
-  if (productos.length === 0) {
+  if (baseProductos.length === 0) {
     alert("No hay productos en la lista");
     return false;
   }
   return true;
 }
+
+const productoNoExiste = (producto) => indiceProductoBuscado(producto) === -1;
 
 alert(`Bienvenido al simulador de productos.`);
 
@@ -72,8 +79,8 @@ function menuAgregarProdcuto() {
   do {
     const productoUsuario = prompt("Nombre del producto a ingresar:"); //Solicitar producto al usuario
 
-    if (productoUsuario === null) {
-      //Si el usuario cancela se cierra el programa
+    if (promptNull(productoUsuario)) {
+      alert("Hasta luego");
       break;
     }
 
@@ -102,15 +109,18 @@ function menuAgregarProdcuto() {
 }
 
 function menuEliminarUnProducto() {
-  console.log(hayProductos());
-  if (!hayProductos) {
-    return alert("No hay productos para eliminar");
-  }
   const productoAEliminar = prompt("Ingrese el producto que quiere eliminar");
-  if (productoAEliminar === null) {
-    return alert("Hasta luego");
+  if (promptNull(productoAEliminar)) {
+    return;
   }
+
   const normalizoProductoAEliminar = productoAEliminar.toLocaleUpperCase();
+
+  if (normalizoProductoAEliminar === "") {
+    eliminarUltimoProducto();
+  } else {
+    eliminarProductoEspecifico(normalizoProductoAEliminar);
+  }
 }
 
 let opciones;
@@ -120,7 +130,7 @@ do {
     "1-Agregar producto\n2-Eliminar un producto\n3-Buscar producto\n4-Listar productos\n 5-Salir",
   );
 
-  if (opciones === null) {
+  if (promptNull(opciones)) {
     alert("Hasta luego");
     break;
   }
@@ -130,17 +140,22 @@ do {
       menuAgregarProdcuto();
       break;
     case "2":
-      console.log(productos);
+      if (!hayProductos()) {
+        break;
+      }
       menuEliminarUnProducto();
       break;
     case "3":
       const producto = prompt("Producto a buscar").toLocaleUpperCase();
-      const indice = indiceProductoBuscado(producto);
-      if (indice === -1) {
+      if (productoNoExiste(producto)) {
         alert("El producto ingresado no existe");
+        break;
       } else {
-        alert(`${indice} - ${productos[indice]}`);
+        const indice = indiceProductoBuscado(producto);
+        alert(`${indice + 1} - ${baseProductos[indice]}`);
+        break;
       }
+    case "4":
       break;
     case "5":
       alert("Hasta luego");
