@@ -33,6 +33,11 @@ Pasos sugeridos:
 
 */
 
+// function eliminarUltimoProducto() {
+//   const productoEliminado = baseProductos.pop();
+//   return alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
+// }
+
 const baseProductos = []; //Creacion del array productos
 
 const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa no sea solo numeros
@@ -47,11 +52,6 @@ const promptNull = (valor) => valor === null;
 function agregarProducto(producto) {
   baseProductos.push(producto); //Agrega producto al final del array
 }
-
-// function eliminarUltimoProducto() {
-//   const productoEliminado = baseProductos.pop();
-//   return alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
-// }
 
 function eliminarProductoEspecifico(producto) {
   const indice = indiceProductoBuscado(producto);
@@ -70,9 +70,7 @@ function hayProductos() {
   return true;
 }
 
-const productoNoExiste = (producto) => indiceProductoBuscado(producto) === -1;
-
-function menuAgregarProdcuto() {
+function menuAgregarProducto() {
   do {
     const productoUsuario = prompt("Nombre del producto a ingresar:"); //Solicitar producto al usuario
 
@@ -86,7 +84,7 @@ function menuAgregarProdcuto() {
       continue;
     }
 
-    const productoNormalizado = productoUsuario.toUpperCase();
+    const productoNormalizado = productoUsuario.toUpperCase().trim();
 
     if (esNumero(productoNormalizado)) {
       alert("El producto ingresado no es valido, ingrese un producto valido");
@@ -111,7 +109,7 @@ function menuEliminarUnProducto() {
     return;
   }
 
-  const normalizoProductoAEliminar = productoAEliminar.toUpperCase();
+  const normalizoProductoAEliminar = productoAEliminar.toUpperCase().trim();
 
   if (normalizoProductoAEliminar === "") {
     alert("Debe ingresar el producto a eliminar");
@@ -120,8 +118,19 @@ function menuEliminarUnProducto() {
   }
 }
 
-function menuBuscarUnProducto(producto) {
-  const indice = indiceProductoBuscado(producto);
+function menuBuscarUnProducto() {
+  const producto = prompt("Ingrese el producto a buscar");
+
+  if (promptNull(producto)) {
+    return;
+  }
+  const productoNormalizado = producto.toUpperCase().trim();
+  if (productoNormalizado === "") {
+    alert("No se permite campo vacio");
+    return;
+  }
+
+  const indice = indiceProductoBuscado(productoNormalizado);
   if (indice === -1) {
     alert("El producto ingresado no existe");
     return;
@@ -154,7 +163,7 @@ do {
 
   switch (opciones) {
     case "1":
-      menuAgregarProdcuto();
+      menuAgregarProducto();
       break;
     case "2":
       if (!hayProductos()) {
@@ -168,8 +177,7 @@ do {
         alert("No hay productos en la lista");
         break;
       }
-      const producto = prompt("Producto a buscar").toUpperCase();
-      menuBuscarUnProducto(producto);
+      menuBuscarUnProducto();
       break;
     case "4":
       if (!hayProductos()) {
