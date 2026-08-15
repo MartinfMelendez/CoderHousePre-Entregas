@@ -121,7 +121,10 @@ function menuEliminarUnProducto() {
   }
 }
 
-function menuBuscarUnProducto() {}
+function menuBuscarUnProducto(producto) {
+  const indice = baseProductos.indexOf(producto);
+  alert(`${indice + 1} - ${baseProductos[indice]}`);
+}
 
 alert(`Bienvenido al simulador de productos.`);
 
@@ -148,15 +151,17 @@ do {
       menuEliminarUnProducto();
       break;
     case "3":
+      if (!hayProductos()) {
+        break;
+      }
       const producto = prompt("Producto a buscar").toLocaleUpperCase();
+
       if (productoNoExiste(producto)) {
         alert("El producto ingresado no existe");
         break;
-      } else {
-        const indice = indiceProductoBuscado(producto);
-        alert(`${indice + 1} - ${baseProductos[indice]}`);
-        break;
       }
+      menuBuscarUnProducto(producto);
+      break;
     case "4":
       break;
     case "5":
