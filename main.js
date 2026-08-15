@@ -89,19 +89,21 @@ function menuAgregarProdcuto() {
       continue;
     }
 
-    if (esNumero(productoUsuario)) {
+    const productoNormalizado = productoUsuario.toLocaleUpperCase();
+
+    if (esNumero(productoNormalizado)) {
       alert("El producto ingresado no es valido, ingrese un producto valido");
       continue;
     }
     if (
-      productoRepetido(productoUsuario)
+      productoRepetido(productoNormalizado)
     ) //Se normaliza los datos para evitar problemas de key sensitive
     {
       alert("El producto ya existe en la lista, ingrese otro producto");
       continue;
     }
 
-    agregarProducto(productoUsuario); //Agrega el producto al array
-    alert(`Producto agregado: ${productoUsuario}`); //Muestra el producto agregado
+    agregarProducto(productoNormalizado); //Agrega el producto al array
+    alert(`Producto agregado: ${productoNormalizado}`); //Muestra el producto agregado
   } while (confirm("Desea agregar un producto?"));
 }
