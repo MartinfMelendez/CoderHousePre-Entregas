@@ -35,7 +35,7 @@ Pasos sugeridos:
 
 const baseProductos = []; //Creacion del array productos
 
-const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa sea no sea solo numeros
+const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa no sea solo numeros
 
 const productoRepetido = (producto) => baseProductos.includes(producto); //Verifico si ya existe el producto
 
@@ -121,11 +121,11 @@ function menuEliminarUnProducto() {
 }
 
 function menuBuscarUnProducto(producto) {
-  if (productoNoExiste(producto)) {
+  const indice = indiceProductoBuscado(producto);
+  if (indice === -1) {
     alert("El producto ingresado no existe");
     return;
   }
-  const indice = indiceProductoBuscado(producto);
   alert(`${indice + 1} - ${baseProductos[indice]}`);
 }
 
