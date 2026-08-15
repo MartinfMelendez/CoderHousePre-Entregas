@@ -73,8 +73,6 @@ function hayProductos() {
 
 const productoNoExiste = (producto) => indiceProductoBuscado(producto) === -1;
 
-alert(`Bienvenido al simulador de productos.`);
-
 function menuAgregarProdcuto() {
   do {
     const productoUsuario = prompt("Nombre del producto a ingresar:"); //Solicitar producto al usuario
@@ -122,6 +120,10 @@ function menuEliminarUnProducto() {
     eliminarProductoEspecifico(normalizoProductoAEliminar);
   }
 }
+
+function menuBuscarUnProducto() {}
+
+alert(`Bienvenido al simulador de productos.`);
 
 let opciones;
 
