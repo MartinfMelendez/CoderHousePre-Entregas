@@ -35,6 +35,13 @@ Pasos sugeridos:
 
 const productos = []; //Creacion del array productos
 
+const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa sea un numero
+
+const productoRepetido = (producto) => productos.includes(producto); //Verifico si ya existe el producto
+
+const indiceProductoBuscado = (producto) => productos.indexOf(producto);
+
+//Acciones sobre el array
 function agregarProducto(producto) {
   productos.push(producto); //Agrega producto al final del array
 }
@@ -44,7 +51,13 @@ function eliminarUltimoProducto() {
   alert(`Se elimino el producto: ${productoEliminado}`); //Elimina el ultimo producto y lo muestra en un alert
 }
 
-function hayProducto(producto) {
+function eliminarProductoEspecifico(producto) {
+  const indice = indiceProductoBuscado(producto);
+  const productoAEliminar = productos.splice(indice, 1);
+  return productoAEliminar;
+}
+
+function hayProductos() {
   //Funcion para valir si hay productos en el array
   if (productos.length === 0) {
     alert("No hay productos en la lista");
@@ -53,27 +66,7 @@ function hayProducto(producto) {
   return true;
 }
 
-const esNumero = (dato) => !isNaN(dato); //Verifica que lo que se ingresa sea un numero
-
-const productoRepetido = (producto) => productos.includes(producto);
-
-alert(
-  `Bienvenido al simulador de productos, actualmente hay ${productos.length} productos en la lista.`,
-);
-
-const opciones = prompt(
-  "1-Agregar producto\n2-Eliminar un producto\n3-Buscar producto\n4-Listar productos",
-);
-console.log(opciones);
-
-switch (opciones) {
-  case "1":
-    menuAgregarProdcuto();
-    break;
-
-  default:
-    break;
-}
+alert(`Bienvenido al simulador de productos.`);
 
 function menuAgregarProdcuto() {
   do {
@@ -107,3 +100,53 @@ function menuAgregarProdcuto() {
     alert(`Producto agregado: ${productoNormalizado}`); //Muestra el producto agregado
   } while (confirm("Desea agregar un producto?"));
 }
+
+function menuEliminarUnProducto() {
+  console.log(hayProductos());
+  if (!hayProductos) {
+    return alert("No hay productos para eliminar");
+  }
+  const productoAEliminar = prompt("Ingrese el producto que quiere eliminar");
+  if (productoAEliminar === null) {
+    return alert("Hasta luego");
+  }
+  const normalizoProductoAEliminar = productoAEliminar.toLocaleUpperCase();
+}
+
+let opciones;
+
+do {
+  opciones = prompt(
+    "1-Agregar producto\n2-Eliminar un producto\n3-Buscar producto\n4-Listar productos\n 5-Salir",
+  );
+
+  if (opciones === null) {
+    alert("Hasta luego");
+    break;
+  }
+
+  switch (opciones) {
+    case "1":
+      menuAgregarProdcuto();
+      break;
+    case "2":
+      console.log(productos);
+      menuEliminarUnProducto();
+      break;
+    case "3":
+      const producto = prompt("Producto a buscar").toLocaleUpperCase();
+      const indice = indiceProductoBuscado(producto);
+      if (indice === -1) {
+        alert("El producto ingresado no existe");
+      } else {
+        alert(`${indice} - ${productos[indice]}`);
+      }
+      break;
+    case "5":
+      alert("Hasta luego");
+      break;
+    default:
+      alert("Opcion no valida");
+      break;
+  }
+} while (opciones !== "5");
