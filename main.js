@@ -25,7 +25,7 @@ Entrega:
 
 Sube tus archivos a un repositorio de GitHub y comparte la URL. Asegúrate de que el repositorio sea público para que pueda ser revisado.*/
 
-const dbProductos = [];
+const dbProductos = []; //Se utiliza como base de datos
 
 class Producto {
     constructor(nombre, precio, categoria, marca) {
@@ -36,16 +36,21 @@ class Producto {
         this.marca = marca;
     }
 
-    precioConIva() {
+    precioConIva() { //Funcion para calcular el IVA de los productos
         return this.precio * 1.21;
     }
 }
 
 function addProducto(nombre, precio, categoria, marca) {
     console.log(nombre, precio, categoria, marca);
-    if (!nombre || !categoria || !marca || !precio) {
+    if (!nombre || !categoria || !marca || !precio) { //Validamos que se agreguen datos
         console.log("Todos los campos son obligatorios");
         return;
+    }
+
+    if (typeof (precio) !== "number") { //Verificamos que el precio sea un numero
+        console.log("El precio debe ser un valor numerico")
+        return
     }
 
     const producto = new Producto(nombre, precio, categoria, marca);
@@ -54,9 +59,12 @@ function addProducto(nombre, precio, categoria, marca) {
 addProducto("Monitor", 75000, "Perifericos", "Asus");
 addProducto("Mouse", 7500, "Perifericos", "Redragon");
 addProducto("Teclado", 15000, "Perifericos", "Redragon");
+addProducto("Prueba", "25000", "Perifericos", "Redragon");
 
 console.log(dbProductos)
 
 for (const producto of dbProductos) {
     console.log(`El precio con IVA para el ${producto.nombre} es de: $${producto.precioConIva()}`)
 }
+
+
