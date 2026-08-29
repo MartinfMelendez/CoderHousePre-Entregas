@@ -63,7 +63,7 @@ addProducto("Prueba", "25000", "Perifericos", "Redragon");
 
 console.log(dbProductos)
 
-for (const producto of dbProductos) {
+for (const producto of dbProductos) { //Listamos todos los productos con su precio con IVA
     console.log(`El precio con IVA para el ${producto.nombre} es de: $${producto.precioConIva()}`)
 }
 
