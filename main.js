@@ -1,29 +1,4 @@
-/*Entregable
-Instrucciones paso a paso:
 
-    Creación de la Estructura:
-        Define una Clase llamada según tu proyecto (ejemplo: Producto, Item, Usuario).
-        El constructor debe recibir al menos 4 parámetros para inicializar propiedades (ej: nombre, precio, categoria, stock).
-    Añadir Comportamiento:
-        Crea un método dentro de la clase que realice una operación lógica.
-        Ejemplo: un método vender(cantidad) que reste el número del stock o un método aplicarDescuento(porcentaje) que modifique el precio.
-    Instanciación:
-        Crea al menos tres objetos diferentes usando la palabra clave new y guárdalos en constantes.
-    Verificación:
-        Ejecuta los métodos de tus objetos creados y usa console.log para mostrar los resultados finales de las propiedades modificadas.
-    Contexto:
-        El script debe continuar con la logica y herramientas (ciclos, funciones, etc.) del simulador elegido, siendo la Class y los objetos parte del mismo y no una aplicación aislada
-
-Pasos sugeridos
-
-    Define tu entidad: Piensa en qué vas a gestionar. Si es una tienda, tu entidad es  Producto . Si es un gimnasio, es  Socio .
-    Escribe la clase: Define el  constructor  con los parámetros necesarios.
-    Agrega lógica: Crea un método que haga un cálculo. Por ejemplo, si es un producto, un método  sumarIva()  que multiplique el precio por 1.21.
-    Prueba tu código: Crea variables para tus objetos y usa  console.log  para ver si los métodos funcionan como esperas.
-
-Entrega:
-
-Sube tus archivos a un repositorio de GitHub y comparte la URL. Asegúrate de que el repositorio sea público para que pueda ser revisado.*/
 
 const dbProductos = []; //Se utiliza como base de datos
 
@@ -41,15 +16,15 @@ class Producto {
     }
 }
 
-function addProducto(nombre, precio, categoria, marca) {
+function agregarProducto(nombre, precio, categoria, marca) {
     console.log(nombre, precio, categoria, marca);
     if (!nombre || !categoria || !marca || !precio) { //Validamos que se agreguen datos
         console.log("Todos los campos son obligatorios");
         return;
     }
 
-    if (typeof (precio) !== "number") { //Verificamos que el precio sea un numero
-        console.log("El precio debe ser un valor numerico")
+    if (typeof (precio) !== "number" || precio <= 0) { //Verificamos que el precio sea un numero
+        console.log("El precio debe ser un valor numerico positivo");
         return
     }
     const id = dbProductos.length + 1 //Se genera un id para cada producto
@@ -57,15 +32,44 @@ function addProducto(nombre, precio, categoria, marca) {
     dbProductos.push(producto);
 }
 
+function buscarProductoPorId(id) {
+
+    const producto = dbProductos.find(producto => producto.id === id); //Si se encuentra el producto, lo retornamos
+
+    if (!producto) {
+        return "Producto no encontrado"; //Si no se encuentra el producto, retornamos un mensaje
+    }
+    return producto;
+}
 
 
-addProducto("Monitor", 75000, "Perifericos", "Asus");
-addProducto("Mouse", 7500, "Perifericos", "Redragon");
-addProducto("Teclado", 15000, "Perifericos", "Redragon");
-addProducto("Prueba", "25000", "Perifericos", "Redragon");
+
+agregarProducto("Monitor", 75000, "Perifericos", "Asus");
+agregarProducto("Mouse", 7500, "Perifericos", "Redragon");
+agregarProducto("Teclado", 15000, "Perifericos", "Redragon");
+agregarProducto("Auriculares", 32000, "Audio", "HyperX");
+agregarProducto("Parlantes", 45000, "Audio", "Logitech");
+agregarProducto("Webcam", 28000, "Perifericos", "Logitech");
+agregarProducto("Notebook", 850000, "Computacion", "Lenovo");
+agregarProducto("Gabinete", 120000, "Componentes", "Thermaltake");
+agregarProducto("Placa de video", 650000, "Componentes", "Nvidia");
+agregarProducto("Procesador", 420000, "Componentes", "AMD");
+agregarProducto("Memoria RAM 16GB", 85000, "Componentes", "Kingston");
+agregarProducto("Disco SSD 1TB", 110000, "Almacenamiento", "Samsung");
+agregarProducto("Disco HDD 2TB", 95000, "Almacenamiento", "Western Digital");
+agregarProducto("Motherboard", 250000, "Componentes", "Gigabyte");
+agregarProducto("Fuente 650W", 135000, "Componentes", "Corsair");
+agregarProducto("Mousepad", 12000, "Perifericos", "Razer");
+agregarProducto("Micrófono", 55000, "Audio", "HyperX");
+agregarProducto("Silla Gamer", 280000, "Muebles", "Corsair");
+agregarProducto("Tablet", 350000, "Moviles", "Samsung");
+agregarProducto("Smartphone", 720000, "Moviles", "Motorola");
 
 console.log(dbProductos)
 
 for (const producto of dbProductos) { //Listamos todos los productos con su precio con IVA
     console.log(`El precio con IVA para el ${producto.nombre} es de: $${producto.precioConIva()}`)
 }
+
+console.log(buscarProductoPorId("30")) //Buscamos un producto por su id
+
