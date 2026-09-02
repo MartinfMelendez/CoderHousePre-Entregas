@@ -28,8 +28,8 @@ Sube tus archivos a un repositorio de GitHub y comparte la URL. Asegúrate de qu
 const dbProductos = []; //Se utiliza como base de datos
 
 class Producto {
-    constructor(nombre, precio, categoria, marca) {
-        this.id = dbProductos.length === 0 ? 1 : dbProductos[dbProductos.length - 1].id + 1; //Se hace un id autoincremental 
+    constructor(id, nombre, precio, categoria, marca) {
+        this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
@@ -52,10 +52,13 @@ function addProducto(nombre, precio, categoria, marca) {
         console.log("El precio debe ser un valor numerico")
         return
     }
-
-    const producto = new Producto(nombre, precio, categoria, marca);
+    const id = dbProductos.length + 1 //Se genera un id para cada producto
+    const producto = new Producto(id, nombre, precio, categoria, marca);
     dbProductos.push(producto);
 }
+
+
+
 addProducto("Monitor", 75000, "Perifericos", "Asus");
 addProducto("Mouse", 7500, "Perifericos", "Redragon");
 addProducto("Teclado", 15000, "Perifericos", "Redragon");
@@ -66,5 +69,3 @@ console.log(dbProductos)
 for (const producto of dbProductos) { //Listamos todos los productos con su precio con IVA
     console.log(`El precio con IVA para el ${producto.nombre} es de: $${producto.precioConIva()}`)
 }
-
-
