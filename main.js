@@ -28,7 +28,7 @@ function agregarProducto(nombre, precio, categoria, marca) {
         return
     }
     const id = dbProductos.length + 1 //Se genera un id para cada producto
-    const producto = new Producto(id, nombre, precio, categoria, marca);
+    const producto = new Producto(id, nombre.toLowerCase(), precio, categoria.toLowerCase(), marca.toLowerCase());
     dbProductos.push(producto);
 }
 
@@ -43,6 +43,25 @@ function buscarProductoPorId(id) {
 }
 
 
+function eliminarProductoPorId(id) {
+    const index = dbProductos.findIndex(indice => indice.id === id)//Buscamos el indice del producto a eliminar
+
+    if (index === -1) {
+        return "Producto no encontrado"; //Si no se encuentra el producto, retornamos un mensaje
+    }
+
+    const productoEliminado = dbProductos.splice(index, 1)//Se elimina el producto del array y se guarda en una variable
+    return `Se eliminó el producto: ${productoEliminado[0].nombre}` //Retornamos el producto eliminado
+}
+
+function buscarProductoPorNombre(nombre) {
+    const productos = dbProductos.filter(producto => producto.nombre.toLowerCase().includes(nombre.toLowerCase())) //Buscamos los productos que contengan el nombre ingresado
+
+    if (productos.length === 0) {
+        return "No hay productos con esa descripcion"; //Si no se encuentra el producto, retornamos un mensaje
+    }
+    return productos;
+}
 
 agregarProducto("Monitor", 75000, "Perifericos", "Asus");
 agregarProducto("Mouse", 7500, "Perifericos", "Redragon");
@@ -72,4 +91,5 @@ for (const producto of dbProductos) { //Listamos todos los productos con su prec
 }
 
 console.log(buscarProductoPorId("30")) //Buscamos un producto por su id
-
+console.log(eliminarProductoPorId(15)) //Eliminamos un producto por su id
+console.log(buscarProductoPorNombre("disco")) //Buscamos un producto por su nombre
