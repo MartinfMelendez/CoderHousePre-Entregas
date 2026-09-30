@@ -1,5 +1,5 @@
 const dbProductos = []; //Se utiliza como base de datos
-const carrito = []; //Se utiliza como carrito de compras
+const dbCarrito = []; //Se utiliza como carrito de compras
 
 class Producto {
     constructor(id, nombre, precio, categoria, marca) {
@@ -15,20 +15,32 @@ class Producto {
     }
 }
 
-function agregarProducto(nombre, precio, categoria, marca) {
-    console.log(nombre, precio, categoria, marca);
-    if (!nombre || !categoria || !marca) { //Validamos que se agreguen datos
-        console.log("Todos los campos son obligatorios");
-        return;
+function listarProductos() {
+    if (dbProductos.length === 0) {
+        console.log("No hay productos cargados")
+        return []
     }
+    return dbProductos
+}
 
-    if (typeof (precio) !== "number" || precio <= 0) { //Verificamos que el precio sea un numero
-        console.log("El precio debe ser un valor numerico positivo");
-        return;
+function listarCarrito() {
+    if (dbCarrito.length === 0) {
+        console.log("No hay productos cargados")
+        return []
     }
-    const id = dbProductos.length + 1 //Se genera un id para cada producto
-    const producto = new Producto(id, nombre.toLowerCase(), precio, categoria.toLowerCase(), marca.toLowerCase());
-    dbProductos.push(producto);
+    return dbCarrito
+}
+
+function agregarProducto(nombre, precio, categoria, marca) {
+    try {
+
+        const id = dbProductos.length + 1 //Se genera un id para cada producto
+        const producto = new Producto(id, nombre.toLowerCase(), precio, categoria.toLowerCase(), marca.toLowerCase());
+        dbProductos.push(producto);
+
+    } catch (error) {
+        alert(error.message)
+    }
 }
 
 function buscarProductoPorId(id) {
@@ -52,11 +64,20 @@ function eliminarProductoPorId(id) {
     }
 
     const productoEliminado = dbProductos.splice(index, 1)//Se elimina el producto del array y se guarda en una variable
-    console.log(`Se eliminó el producto: ${productoEliminado[0].nombre}`) //Mostramos un mensaje de que se elimino el producto
-    return productoEliminado[0] //Retornamos el producto eliminado
+    console.log() //Mostramos un mensaje de que se elimino el producto
+    return alert(`Se eliminó el producto: ${productoEliminado[0].nombre}`) //Retornamos el producto eliminado
 }
 
 function buscarProductoPorNombre(nombre) {
+    const producto = dbProductos.find(producto => producto.nombre.toLowerCase() === nombre.toLowerCase())
+    if (!producto) {
+
+        return false;
+    }
+    return producto
+}
+
+function filtrarProductos(nombre) {
     const productos = dbProductos.filter(producto => producto.nombre.toLowerCase().includes(nombre.toLowerCase())) //Buscamos los productos que contengan el nombre ingresado
 
     if (productos.length === 0) {
@@ -67,9 +88,9 @@ function buscarProductoPorNombre(nombre) {
 }
 
 //Listamos todos los productos con su precio con IVA
-for (const producto of dbProductos) { //Listamos todos los productos con su precio con IVA
-    console.log(`El precio con IVA para el ${producto.nombre} es de: $${producto.precioConIva()}`)
-}
+// for (const producto of dbProductos) { //Listamos todos los productos con su precio con IVA
+//     console.log(`El precio con IVA para el ${producto.nombre} es de: $${producto.precioConIva()}`)
+// }
 
 function agregarAlCarrito(id) {
     const producto = buscarProductoPorId(id); //Buscamos el producto por su id
@@ -77,18 +98,26 @@ function agregarAlCarrito(id) {
         console.log("No se puede agregar al carrito, producto no encontrado");
         return;
     }
-    console.log(`El ${producto.nombre} ${producto.marca} se ha agregado al carrito`); //Mostramos un mensaje de que se agrego el producto al carrito
-    carrito.push(producto);
+
+    const existe = dbCarrito.find(producto => producto.id === id)
+    if (existe) {
+        return alert("El producto ya esta agregado")
+    }
+    dbCarrito.push(producto);
 }
 
 function sumarTotalCarrito() {
-    if (carrito.length === 0) {
-        console.log("El carrito esta vacio");
+    if (dbCarrito.length === 0) {
+
         return;
     }
-    const total = carrito.reduce((acc, producto) => acc + producto.precioConIva(), 0); //Sumamos el precio de todos los productos del carrito
-    console.log(`El precio final con IVA es de: $${total}`)
-    return carrito;
+    const total = dbCarrito.reduce((acc, producto) => acc + producto.precioConIva(), 0); //Sumamos el precio de todos los productos del carrito
+    return total;
+}
+
+function eliminarProductoCarrito(id) {
+    const index = dbCarrito.findIndex(indice => indice.id === id)
+    dbCarrito.splice(index, 1)
 }
 
 //Agregamos productos a la base de datos
@@ -115,17 +144,18 @@ agregarProducto("Smartphone", 720000, "Moviles", "Motorola");
 
 
 //Ejecutamos las funciones de busqueda y eliminacion de productos
-console.log(buscarProductoPorId(25)) //Buscamos un producto por su id
-console.log(eliminarProductoPorId(15)) //Eliminamos un producto por su id
-console.log(buscarProductoPorId(15))
-console.log(buscarProductoPorNombre("disco")) //Buscamos un producto por su nombre
+// console.log(buscarProductoPorId(25)) //Buscamos un producto por su id
+// console.log(eliminarProductoPorId(15)) //Eliminamos un producto por su id
+// console.log(buscarProductoPorId(15))
+// console.log(filtrarProductos("disco")) //Buscamos un producto por su nombre
 
 
 //Agregamos productos al carrito
-agregarAlCarrito(25)
-agregarAlCarrito(1)
-agregarAlCarrito(9)
+// agregarAlCarrito(25)
+// agregarAlCarrito(1)
+// agregarAlCarrito(9)
 
-console.log(sumarTotalCarrito()) //Sumamos el total del carrito
+// console.log(sumarTotalCarrito()) //Sumamos el total del carrito
+// console.log(filtrarProductos("Disco"))
 
-
+export { agregarProducto, buscarProductoPorId, eliminarProductoPorId, buscarProductoPorNombre, filtrarProductos, agregarAlCarrito, sumarTotalCarrito, listarProductos, listarCarrito, eliminarProductoCarrito }
