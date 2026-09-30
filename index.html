@@ -1,68 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./estilo.css">
-    <!-- JS -->
-    <script type="module" defer src="index.js"></script>
-    <script type="module" defer src="main.js"></script>
-    <title>Document</title>
+
+    <title>Tienda Online - Simulador</title>
+
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <h1>Tienda Online</h1>
+        <p>Simulador de productos y carrito de compras</p>
     </header>
-    <main>
-        <!DOCTYPE html>
-        <html lang="es">
 
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Mi Simulador</title>
-        </head>
+    <main class="simulador">
 
-        <body>
-            <main class="simulador">
-                <h1>Mi Simulador</h1>
-                <h3>Agregar producto nuevo</h3>
-                <section class="formulario" id="formulario">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" placeholder="Nombre del producto">
-                    <label for="precio">Precio:</label>
-                    <input type="number" id="precio" placeholder="Precio">
-                    <label for="categoria">Categoria:</label>
-                    <input type="text" id="categoria" placeholder="Categoria del producto">
-                    <label for="marca">Marca:</label>
-                    <input type="text" id="marca" placeholder="Marca del producto">
-                    <button id="agregar"> Agregar </button>
-                    <button id="buscar"> Buscar </button>
-                </section>
-                <hr>
-                <section class="productos">
+        <section class="panel formulario-panel">
+
+            <h2>Agregar producto</h2>
+
+            <form id="formulario">
+
+                <div class="campo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" placeholder="Ej: Monitor" required>
+                </div>
+
+                <div class="campo">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" placeholder="Ej: 75000" min="1" required>
+                </div>
+
+                <div class="campo">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" placeholder="Ej: Periféricos" required>
+                </div>
+
+                <div class="campo">
+                    <label for="marca">Marca</label>
+                    <input type="text" id="marca" placeholder="Ej: Asus" required>
+                </div>
+
+                <button type="submit" class="btn btn-principal" id="agregar">
+                    Agregar producto
+                </button>
+
+            </form>
+
+            <p id="mensaje" class="mensaje"></p>
+
+        </section>
+
+
+        <section class="panel">
+
+            <div class="seccion-header">
+
+                <div>
                     <h2>Productos</h2>
-                    <div id="listaProductos" class="contenedor-productos">
-                        <!-- Aca se cargar las CARDS -->
-                    </div>
-                </section>
+                    <p>Buscá un producto por nombre.</p>
+                </div>
 
-                <section class="carrito">
+                <div class="buscador">
+
+                    <input type="search" id="busqueda" placeholder="Buscar producto..." autocomplete="off">
+
+                    <button type="button" id="limpiarBusqueda" class="btn btn-secundario">
+                        Mostrar todos
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div id="listaProductos" class="contenedor-productos"></div>
+
+        </section>
+
+
+        <section class="panel carrito-panel">
+
+            <div class="seccion-header">
+
+                <div>
                     <h2>Carrito de compras</h2>
-                    <div id="carritoProductos" class="contenedor-carrito">
-                        <!-- Aca se cargar las CARDS del carrito -->
-                    </div>
-                    <div >
-                        <p>Total con IVA:  <span id="totalCarrito"></span></p>
-                    </div>
-                </section>
-            </main>
+                    <p>Productos seleccionados.</p>
+                </div>
+
+                <div class="total">
+                    <span>Total con IVA</span>
+                    <strong id="totalCarrito">$0</strong>
+                </div>
+
+            </div>
+
+            <div id="carritoProductos" class="contenedor-carrito"></div>
+
+        </section>
+
+    </main>
 
 
+    <footer class="footer">
+        <p>Simulador JavaScript - CoderHouse</p>
+    </footer>
 
-            <footer></footer>
-        </body>
 
-        </html>
+    <script type="module" src="./index.js"></script>
+
+</body>
+
+</html>

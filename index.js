@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", (e) => { //Cargamos los productos 
 });
 
 const btnAgregar = document.getElementById("agregar")
-const btnBuscar = document.getElementById("buscar")
+const btnBuscar = document.getElementById("limpiarBusqueda")
 
 
 const contenedorProductos = document.getElementById("listaProductos")
@@ -50,11 +50,9 @@ btnAgregar.addEventListener("click", (e) => {
 
 btnBuscar.addEventListener("click", (e) => {
     e.preventDefault()
-    const name = document.getElementById("nombre").value
+    const name = document.getElementById("busqueda").value
     console.log(name)
-    if (name === "") {
-        alert("Se debe completar el campo nombre")
-    }
+
     const productos = filtrarProductos(name)
     if (productos.length === 0) {
         return alert("No hay productos con esa descripcion")
@@ -123,6 +121,7 @@ contenedorCarrito.addEventListener("click", (e) => {
         const id = card.id;
 
         eliminarProductoCarrito(Number(id))
+
         createCardCarrito()
         const carrito = document.getElementById("totalCarrito")
 
