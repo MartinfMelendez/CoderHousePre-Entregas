@@ -1,7 +1,7 @@
-import { agregarProducto, buscarProductoPorId, buscarProductoPorNombre, eliminarProductoPorId, filtrarProductos, agregarAlCarrito, sumarTotalCarrito, listarProductos, listarCarrito, eliminarProductoCarrito } from "./main.js";
+import { agregarProducto, buscarProductoPorNombre, eliminarProductoPorId, filtrarProductos, agregarAlCarrito, sumarTotalCarrito, listarProductos, listarCarrito, eliminarProductoCarrito } from "./main.js";
 
-document.addEventListener("DOMContentLoaded", (e) => { //Cargamos los productos al Iniciar el HTML
-    e.preventDefault()
+document.addEventListener("DOMContentLoaded", () => { //Cargamos los productos al Iniciar el HTML
+
     createCard();
 });
 
@@ -12,46 +12,44 @@ const btnBuscar = document.getElementById("limpiarBusqueda")
 const contenedorProductos = document.getElementById("listaProductos")
 const contenedorCarrito = document.getElementById("carritoProductos")
 
+const carrito = document.getElementById("totalCarrito")
+
 
 btnAgregar.addEventListener("click", (e) => {
-    try {
-        e.preventDefault()
-        const nombre = document.getElementById("nombre").value;
-        const precio = Number(document.getElementById("precio").value);
-        const categoria = document.getElementById("categoria").value;
-        const marca = document.getElementById("marca").value
 
-        if (!nombre || !categoria || !marca) { //Validamos que se agreguen datos
+    e.preventDefault()
+    const nombre = document.getElementById("nombre").value;
+    const precio = Number(document.getElementById("precio").value);
+    const categoria = document.getElementById("categoria").value;
+    const marca = document.getElementById("marca").value
 
-            return alert("Todos los campos son obligatorios");
-        }
+    if (!nombre || !categoria || !marca) { //Validamos que se agreguen datos
 
-        if (typeof (precio) !== "number" || precio <= 0) { //Verificamos que el precio sea un numero
-
-            return alert("El precio debe ser mayor a 0");
-        }
-
-        const repetido = buscarProductoPorNombre(nombre)
-        if (repetido) {
-            return alert("El producto que intenta ingresar ya existe")
-        }
-
-        agregarProducto(nombre, Number(precio), categoria, marca)
-
-        alert("Producto agregado correctamente")
-
-        createCard()
-
-    } catch (error) {
-        alert(error)
+        return alert("Todos los campos son obligatorios");
     }
+
+    if (isNaN(precio) || precio <= 0) { //Verificamos que el precio sea un numero
+
+        return alert("El precio debe ser mayor a 0");
+    }
+
+    const repetido = buscarProductoPorNombre(nombre)
+    if (repetido) {
+        return alert("El producto que intenta ingresar ya existe")
+    }
+
+    agregarProducto(nombre, precio, categoria, marca)
+
+    alert("Producto agregado correctamente")
+
+    createCard()
+
 
 })
 
-btnBuscar.addEventListener("click", (e) => {
-    e.preventDefault()
+btnBuscar.addEventListener("click", () => {
+
     const name = document.getElementById("busqueda").value
-    console.log(name)
 
     const productos = filtrarProductos(name)
     if (productos.length === 0) {
@@ -82,8 +80,8 @@ function createCard(obj) { //Funcion para crear las Cards
     }
 }
 
-function createCardCarrito(obj) { //Funcion para crear las Cards
-    let productos = obj ?? listarCarrito()
+function createCardCarrito() { //Funcion para crear las Cards
+    let productos = listarCarrito()
 
     if (!Array.isArray(productos)) {
         productos = [productos]
@@ -103,19 +101,8 @@ function createCardCarrito(obj) { //Funcion para crear las Cards
     }
 }
 
-contenedorProductos.addEventListener("click", (e) => {
-    e.preventDefault()
-    if (e.target.classList.contains("btnEliminar")) {
-        const card = e.target.closest(".card");
-        const id = card.id;
-        eliminarProductoPorId(Number(id))
-        createCard()
-    }
-})
-
 
 contenedorCarrito.addEventListener("click", (e) => {
-    e.preventDefault()
     if (e.target.classList.contains("btnEliminarCarrito")) {
         const card = e.target.closest(".cardCarrito");
         const id = card.id;
@@ -123,32 +110,32 @@ contenedorCarrito.addEventListener("click", (e) => {
         eliminarProductoCarrito(Number(id))
 
         createCardCarrito()
-        const carrito = document.getElementById("totalCarrito")
 
         const total = sumarTotalCarrito()
-        console.log(total)
-        if (total === undefined) {
-            carrito.innerText = ""
-            return;
-        }
+
         carrito.innerText = `$ ${total}`
 
     }
 })
-
 
 contenedorProductos.addEventListener("click", (e) => {
-    e.preventDefault()
-    if (e.target.classList.contains("btnComprar")) {
-        const card = e.target.closest(".card");
-        const id = card.id;
-        agregarAlCarrito(Number(id))
-        createCardCarrito()
 
-        const carrito = document.getElementById("totalCarrito")
+    const card = e.target.closest(".card");
 
-        const total = sumarTotalCarrito()
+    if (!card) return;
 
-        carrito.innerText = `$ ${total}`
+    const id = Number(card.id);
+
+    if (e.target.classList.contains("btnEliminar")) {
+        eliminarProductoPorId(id);
+        createCard();
     }
-})
+
+    if (e.target.classList.contains("btnComprar")) {
+        agregarAlCarrito(id);
+        createCardCarrito();
+
+        const total = sumarTotalCarrito();
+        carrito.innerText = `$ ${total}`;
+    }
+});

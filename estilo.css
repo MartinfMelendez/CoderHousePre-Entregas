@@ -198,7 +198,7 @@ gap: 20px;
 }
 
 
-.card{
+.card, .cardCarrito{
 background: #f8fafc;
 
 border: 1px solid #e2e8f0;
@@ -219,7 +219,7 @@ transition:
 
 }
 
-.card:hover {
+.card:hover, .cardCarrito:hover {
 transform: translateY(-4px);
 
 box-shadow:
@@ -228,12 +228,12 @@ box-shadow:
 
 }
 
-.card h3 {
+.card h3, .cardCarrito h3 {
 color: #312e81;
 font-size: 1.2rem;
 }
 
-.card p {
+.card p, .cardCarrito p {
 color: #475569;
 line-height: 1.4;
 }
@@ -253,36 +253,6 @@ margin-top: auto;
 }
 
 
-.cardCarrito {
-    background: #f4f3f3;
-    border: 1px solid #cbd5e1;
-    border-radius: 12px;
-    padding: 18px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.cardCarrito:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-}
-
-.cardCarrito h3 {
-    color: #312e81;
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
-
-.cardCarrito p {
-    color: #475569;
-    margin: 0;
-}
 
 .cardCarrito strong {
     color: #15803d;
