@@ -13,19 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 btnAgregar.addEventListener("click", (e) => {
-
     e.preventDefault();
-
     try {
-
         const nombre = document.getElementById("nombre").value;
         const precio = Number(document.getElementById("precio").value);
         const categoria = document.getElementById("categoria").value;
         const marca = document.getElementById("marca").value;
 
-
         // Validaciones
-
         if (!nombre || !categoria || !marca) {
             return alert("Todos los campos son obligatorios");
         }

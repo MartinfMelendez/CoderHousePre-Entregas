@@ -12,30 +12,22 @@ class Producto {
     }
 
     precioConIva() {
-
         return this.precio * 1.21;
-
     }
 
 }
 
 function guardarProductos() {
-
     localStorage.setItem(STORAGE_PRODUCTOS, JSON.stringify(dbProductos));
-
 }
 
 function cargarProductos() {
-
     const productosGuardados = localStorage.getItem(STORAGE_PRODUCTOS);
-
     // Si no hay productos guardados
     // devolvemos un array vacío
 
     if (!productosGuardados) {
-
         return [];
-
     }
 
     const productosJSON = JSON.parse(productosGuardados);
