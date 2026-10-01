@@ -240,3 +240,25 @@ function actualizarTotal() {
     totalCarrito.innerText =
         `$ ${total.toFixed(2)}`;
 }
+
+
+function mostrarMensajeBienvenida() {
+
+    setTimeout(() => {
+
+        const mensaje = document.createElement("div");
+        mensaje.classList.add("mensajeAsincrono");
+        mensaje.innerHTML = `
+            <strong>Recordatorio:</strong> los precios del carrito incluyen IVA.
+        `;
+
+        document.body.prepend(mensaje);
+
+        setTimeout(() => {
+            mensaje.remove();
+        }, 5000);
+
+    }, 3000);
+
+}
+mostrarMensajeBienvenida();
